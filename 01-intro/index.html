@@ -1,0 +1,26 @@
+<DOCTYPE html>
+<html lang="fr">
+<head>
+	<title>Intro POO JS</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	
+	<button data-name="Mon button 1">Cliquez ici</button>
+	<button data-name="Mon button 2">Cliquez ici</button>
+	<button data-name="Mon button 3">Cliquez ici</button>
+
+	<script>
+		let arrButtons = document.querySelectorAll('button');
+		
+		arrButtons.forEach(elButton => {
+			
+			elButton.addEventListener('click', function() {
+				console.log(this.dataset.name);
+			});
+			
+		});		
+		
+	</script>
+</body>
+</html>
