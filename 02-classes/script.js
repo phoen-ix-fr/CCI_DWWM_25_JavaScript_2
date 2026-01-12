@@ -28,3 +28,14 @@ objGobelin.attack(objPlayer);
 objPlayer.attack(objGobelin);
 
 objGobelin.showCurrentHp();
+
+
+objPlayer.addXp(20);
+console.log(objPlayer);
+
+objPlayer.addXp(90);
+console.log(objPlayer);
+
+
+objPlayer.addXp(600);
+console.log(objPlayer);

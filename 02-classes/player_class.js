@@ -31,8 +31,6 @@ export class Player extends Character
 	
 	/**
 	/* Ajoute des points d'expérience à notre joueur
-	/* 
-	/* @todo Gérer le gain de plusieurs niveaux en 1 seul gain d'expérience
 	/*
 	/* @param Number xp Nombre de points d'expérience
 	 */
@@ -47,7 +45,13 @@ export class Player extends Character
 			this.#levelUp();
 			
 			// XP actuelle vaut le reste du Gain
-			this.#xp = intRestXp;
+			// this.#xp = intRestXp;
+			
+			// Appel récursif : gestion des gains de niveaux multiples
+			this.#xp = 0; 	//< Reset des points d'XP avant de continuer 
+							// les calculs et d'ajouter le reste des points gagnés
+							
+			this.addXp(intRestXp);
 		}
 		else 
 		{	
@@ -60,12 +64,14 @@ export class Player extends Character
 	*/
 	#levelUp()
 	{
+		console.log(`Level UP: ${this._level} - ${this.#xp} / ${this.#maxXp}`);
+		
 		// Incrément du niveau du joueur
 		this._level++;
 		
 		// Nombre de point d'exp nécessaire au prochain niveau
 		// On augmente le maxXP de 10% à chaque level UP
 		// this.#maxXp = this.#maxXp + 0.1 * this.#maxXp;
-		this.#maxXp *= 1.1;
+		this.#maxXp = Math.floor(this.#maxXp * 1.1);
 	}
 }
