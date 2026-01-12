@@ -74,4 +74,9 @@ export class Player extends Character
 		// this.#maxXp = this.#maxXp + 0.1 * this.#maxXp;
 		this.#maxXp = Math.floor(this.#maxXp * 1.1);
 	}
+	
+	showCurrentXp()
+	{
+		console.log(`${this._name} (XP) : ${this.#xp} / ${this.#maxXp}`);
+	}
 }

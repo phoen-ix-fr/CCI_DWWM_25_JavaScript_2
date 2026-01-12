@@ -1,5 +1,5 @@
-// Import de la classe Character à partir du fichier character_class.js
-import { Character } from './character_class.js';
+// Import des classes Player et Enemy à partir des fichiers JS
+import { Enemy } from './enemy_class.js';
 import { Player } from './player_class.js';
 
 let posPlayerInitial = {x: 0, y: 2}; //< Objet littéral qui stocke une position (x, y
@@ -15,11 +15,14 @@ console.log(objPlayer);
 
 // Instanciation d'un ennemi (gobelin)
 // cf. Kévin pour le nom chelou
-let objGobelin = new Character('Wabbajack', 'gobelin', 25, 200, 400, {x: 0, y: 0}, 1);
+let objGobelin = new Enemy('Wabbajack', 'gobelin', 25, 200, 400, {x: 0, y: 0}, 1);
 
 console.log(objGobelin.getName());
 
 objGobelin.showCurrentHp();
+
+
+objPlayer.showCurrentXp();
 
 // Le gobelin attaque le joueur
 objGobelin.attack(objPlayer);
@@ -29,13 +32,14 @@ objPlayer.attack(objGobelin);
 
 objGobelin.showCurrentHp();
 
+// Test si le gobelin est KO après l'attaque
+if(!objGobelin.isAlive()) {
+	
+	// Récupère le nombre d'XP du kill du gobelin
+	const intXp = objGobelin.getXpGain();
+	
+	// Ajoute les points d'expérience au joueur
+	objPlayer.addXp(intXp);
+}
 
-objPlayer.addXp(20);
-console.log(objPlayer);
-
-objPlayer.addXp(90);
-console.log(objPlayer);
-
-
-objPlayer.addXp(600);
-console.log(objPlayer);
+objPlayer.showCurrentXp();

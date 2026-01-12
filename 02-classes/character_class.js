@@ -121,6 +121,28 @@ export class Character
 	*/
 	showCurrentHp()
 	{
-		console.log(`${this._name} : ${this._hp} / ${this._maxHp}`);
+		console.log(`${this._name} (HP) : ${this._hp} / ${this._maxHp}`);
+	}
+	
+	/**
+	/*	Vérifie si le personnage est en vie
+	/*	(si les points de vie > 0)
+	/*
+	/* @return Boolean Indique si le personnage est en vie
+	 */
+	isAlive()
+	{
+		/*
+		if(this._hp > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		*/
+		
+		return (this._hp > 0);
 	}
 }
