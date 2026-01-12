@@ -1,0 +1,119 @@
+main {
+	
+    width: 750px; /* 380 + 350 + 20 */
+    margin: 15px auto; /* On met les margin ici pour centrer le main */
+
+    display: grid; 
+    gap: 20px; 
+    align-items: start;
+    
+    grid-template-columns: 380px 350px;
+}
+
+#grid-game {
+	/* max-width: 380px; La gestion de la largeur est fait dans le main */  
+	padding: 16px; 
+	height: 382px;
+
+	background: #321654;
+	border-radius: 15px;
+	box-shadow: 0 10px 30px rgba(0,0,0,.35);
+	
+	position: relative;
+}
+
+#grid-help
+{
+    text-align: center;
+    font-size: small;
+	position: absolute;
+	bottom: 5px;
+	color: white;
+}
+
+#grid-layer, #token-layer {	
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#grid-layer {
+
+	display: grid; 
+	grid-template-columns: repeat(8, 40px);
+	grid-template-rows: repeat(8, 40px);
+	
+	gap: 2px; 
+}
+
+.cell, .player, .enemy {
+    width: 40px;
+    height: 40px;	
+}
+
+.cell {
+    position: relative;
+    border-radius: 5px;
+	border: 1px solid black;
+    background-color: #e6e6e6;
+}
+
+.player, .enemy {
+	position: absolute;
+	background-size: cover;
+	border-radius: 5px;
+	margin: 1px;
+}
+
+.player {
+    background-color: #e6e6e6;
+}
+
+.player.in-battle {
+	background-color: rgba(255, 99, 71, 0.4);
+}
+
+#battle-area {
+	  
+	padding: 16px; 
+
+	background: #321654;
+	border-radius: 15px;
+	box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+#dices
+{
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    gap: 5px;
+    width: 100%;
+}
+
+.dice {
+    width: 50px;
+    height: 50px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.dice > img { 
+    display: block; 
+    max-width: 100%; 
+    height: auto; 
+}
+
+#dice-actions
+{
+    margin-top: 15px;
+}
+
+#dice-actions button 
+{
+    background-color: #1b2236;
+    color: #f0f0f0;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: 600;
+}
