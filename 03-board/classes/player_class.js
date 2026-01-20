@@ -1,12 +1,12 @@
 import { Character } from './character_class.js';
 
-export class Enemy extends Character
-{	
+export class Player extends Character
+{
 	constructor(strCharacterClass)
 	{
 		super(strCharacterClass);
 		
 		// Spécifie un type particulier
-		this._type = 'enemy';
-	}
+		this._type = 'player';
+	}	
 }
