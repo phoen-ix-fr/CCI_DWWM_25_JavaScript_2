@@ -38,6 +38,8 @@ export class Board
 		}
 		
 		this.#generateWalls();
+		
+		this.#generateEnemies(5);
 	}
 	
 	/**
@@ -54,11 +56,8 @@ export class Board
 		this.#arrTokensPosition[3][0] = new Wall();
 		this.#arrTokensPosition[3][1] = new Wall();
 		this.#arrTokensPosition[3][2] = new Wall();
-		this.#arrTokensPosition[3][3] = new Wall();
-		this.#arrTokensPosition[3][4] = new Wall();
-		this.#arrTokensPosition[3][5] = new Wall();
-		this.#arrTokensPosition[3][6] = new Wall();
 		this.#arrTokensPosition[3][7] = new Wall();
+		
 		this.#arrTokensPosition[5][2] = new Wall();
 	}
 	
@@ -73,7 +72,7 @@ export class Board
 		for(let i = 0; i < intNumberOfEnemies; i++) {
 			
 			const intRandEnemyPos = this.#getRandomAvailableCell();		
-			this.#arrTokensPosition[intRandEnemyPos.x][intRandEnemyPos.y] = new Enemy();
+			this.#arrTokensPosition[intRandEnemyPos.x][intRandEnemyPos.y] = new Enemy('warrior');
 		}
 		
 		// Création d'une DIV correspondante à un ennemi
@@ -103,9 +102,7 @@ export class Board
 	/* @return {x,y} La position d'une cellule disponible sur le plateau
 	 */
 	#getRandomAvailableCell()
-	{
-		// On récupère uniquement les colonnes (X) qui ont au moins une case de dispo
-		
+	{		
 		let arrAvailablePos = [];
 		
 		// On parcours tous les X
@@ -116,35 +113,14 @@ export class Board
 				
 				if(this.#arrTokensPosition[x][y] === null) {
 					
-					// console.log(`${x} - ${y} est disponible`);
-					
+					// console.log(`${x} - ${y} est disponible`);					
 					arrAvailablePos.push({x: x, y: y});
 				}
 			}
 		}
 		
-		const intRand = getRandomIntBetween(0, arrAvailablePos.length - 1)
-		
+		const intRand = getRandomIntBetween(0, arrAvailablePos.length - 1);		
 		return arrAvailablePos[intRand];		
-		
-		/*
-		
-		const arrAvailableX = [];
-		
-		const intRandX = getRandomIntBetween(0, arrAvailableX.length - 1);
-		
-		const arrAvailableY = this.#arrTokensPosition[intRandX]
-			.map((p, i) => { if(p === null) return i; })
-			.filter(i => i !== undefined);
-		
-		const intRandY = getRandomIntBetween(0, arrAvailableY.length -1);
-		
-		return {
-			x: 0,
-			y: 0
-		};
-		
-		*/
 	}
 	
 	/**
@@ -172,8 +148,10 @@ export class Board
 	/* Construit une DIV et l'ajoute au plateau de jeu
 	/* <div id="grid-layer"></div>	
 	 */
-	createGridLayer()
+	render()
 	{
+		console.log(this.#arrTokensPosition);
+		
 		const elGridLayer = this.#createDivInGridGame("grid-layer");
 		
 		// Création des cases du plateau de jeu
@@ -200,21 +178,5 @@ export class Board
 				}
 			}
 		}
-	}
-	
-	/**
-	/* Construit une DIV et l'ajoute au plateau de jeu
-	/* <div id="token-layer"></div>	
-	 */
-	createTokenLayer()
-	{		
-		// On fait appel à la méthode qui généralise la création d'une DIV
-		// dans la div grid-game
-		const elTokenLayer = this.#createDivInGridGame("token-layer");
-				
-		// Génère 5 ennemis sur le plateau
-		this.#generateEnemies(5);
-		
-		console.log(this.#arrTokensPosition);
 	}
 }

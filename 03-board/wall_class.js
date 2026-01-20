@@ -1,15 +1,11 @@
-export class Wall
+import { Cell } from './cell_class.js';
+
+export class Wall extends Cell
 {
-	/**
-	/*	Générer la DIV correspondante au mur
-	/*
-	/*	@return DOMElement Element DIV correspondant au mur
-	*/
-	render()
-	{
-		const elDiv = document.createElement("div");
-		elDiv.className = "wall";
+	constructor() {
+		super();
 		
-		return elDiv;
+		// Spécifie un type particulier
+		this._type = 'wall';
 	}
 }
