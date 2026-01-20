@@ -1,5 +1,6 @@
 import { Board } from './board_class.js';
 
-let objBoard = new Board(8, 8);
+let objBoard = new Board(8, 8, "grid-game");
 
 objBoard.createGridLayer();
+objBoard.createTokenLayer();
