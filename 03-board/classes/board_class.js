@@ -17,6 +17,8 @@ export class Board
 	
 	#arrTokensPosition;	//< Stocke de manière logique la position des jetons sur le plateau
 	
+	#objPlayer;
+	
 	constructor(sizeWidth, sizeHeight, strGridGameId)
 	{
 		this.#gridSizeWidth  = sizeWidth;
@@ -48,7 +50,9 @@ export class Board
 	#initialisePlayer()
 	{
 		// On créer un joueur sur la position (0,0)
-		this.#arrTokensPosition[0][0] = new Player('archer');
+		this.#objPlayer = new Player('archer', {x: 0, y: 0});
+		
+		this.#arrTokensPosition[0][0] = this.#objPlayer;
 	}
 	
 	/**
@@ -148,8 +152,10 @@ export class Board
 	/* <div id="grid-layer"></div>	
 	 */
 	render()
-	{
-		console.log(this.#arrTokensPosition);
+	{		
+		// Si un grid-layer existe déjà, on le supprime du DOM
+		// L'opérateur ?. appelle la méthode uniquement si l'objet n'est pas NULL
+		document.getElementById("grid-layer")?.remove();
 		
 		const elGridLayer = this.#createDivInGridGame("grid-layer");
 		
@@ -177,5 +183,27 @@ export class Board
 				}
 			}
 		}
+	}
+	
+	movePlayer(dx, dy)
+	{
+		console.log(`Déplacement du joueur: ${dx}, ${dy}`);
+		
+		// Récupérer la position actuelle du joueur
+		const posCurrent = this.#objPlayer.getCurrentPosition();
+		
+		this.#arrTokensPosition[posCurrent.x][posCurrent.y] = null;
+		
+		// Calcul de la nouvelle position
+		posCurrent.x += dx;
+		posCurrent.y += dy;
+		
+		// Deuxième étape mettre à jour la position du joueur
+		this.#objPlayer.setCurrentPosition(posCurrent);
+		
+		this.#arrTokensPosition[posCurrent.x][posCurrent.y] = this.#objPlayer;
+		
+		console.log(this.#objPlayer.getCurrentPosition());
+		console.log(this.#arrTokensPosition);
 	}
 }
