@@ -1,5 +1,6 @@
 import { Wall } from './wall_class.js';
 import { Enemy } from './enemy_class.js';
+import { Player } from './player_class.js';
 
 function getRandomIntBetween(min, max) {
 	min = Math.ceil(min);
@@ -39,7 +40,15 @@ export class Board
 		
 		this.#generateWalls();
 		
+		this.#initialisePlayer();
+		
 		this.#generateEnemies(5);
+	}
+	
+	#initialisePlayer()
+	{
+		// On créer un joueur sur la position (0,0)
+		this.#arrTokensPosition[0][0] = new Player('archer');
 	}
 	
 	/**
@@ -73,17 +82,7 @@ export class Board
 			
 			const intRandEnemyPos = this.#getRandomAvailableCell();		
 			this.#arrTokensPosition[intRandEnemyPos.x][intRandEnemyPos.y] = new Enemy('warrior');
-		}
-		
-		// Création d'une DIV correspondante à un ennemi
-		
-		/*
-		const elEnemyDiv = document.createElement('div');
-		elEnemyDiv.classList.add('enemy');
-		elEnemyDiv.style.backgroundImage = `url("assets/enemy_${ENEMIES_CLASS}.png")`;
-		elTokenLayer.append(elEnemyDiv);
-		*/
-		
+		}		
 	}
 	
 	/**

@@ -70,6 +70,7 @@ main {
 
 .player {
     background-color: #e6e6e6;
+	background-size: cover;
 }
 
 .player.in-battle {
