@@ -20,4 +20,9 @@ export class Character extends Cell
 		
 		return elDiv;
 	}
+	
+	getCharacterClass()
+	{
+		return this._characterClass;
+	}
 }

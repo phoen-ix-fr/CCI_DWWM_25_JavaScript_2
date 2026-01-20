@@ -8,5 +8,8 @@ export class Enemy extends Character
 		
 		// Spécifie un type particulier
 		this._type = 'enemy';
+		
+		// Un ennemi est attaquable
+		this._isFightable = true;
 	}
 }

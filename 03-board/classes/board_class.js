@@ -44,7 +44,8 @@ export class Board
 		
 		this.#initialisePlayer();
 		
-		this.#generateEnemies(5);
+		this.#generateEnemies(2);
+		this.#generateEnemies(3, 'firespirit');
 	}
 	
 	#initialisePlayer()
@@ -80,12 +81,12 @@ export class Board
 	/*	@param Integer intNumberOfEnemies Nombre d'ennemis à générer
 	/*
 	 */
-	#generateEnemies(intNumberOfEnemies)
+	#generateEnemies(intNumberOfEnemies, strCharacterClass = 'warrior')
 	{
 		for(let i = 0; i < intNumberOfEnemies; i++) {
 			
 			const intRandEnemyPos = this.#getRandomAvailableCell();		
-			this.#arrTokensPosition[intRandEnemyPos.x][intRandEnemyPos.y] = new Enemy('warrior');
+			this.#arrTokensPosition[intRandEnemyPos.x][intRandEnemyPos.y] = new Enemy(strCharacterClass);
 		}		
 	}
 	
@@ -97,10 +98,20 @@ export class Board
 	#isCellAvailable(intX, intY)
 	{
 		return (
-			intX >= 0 && intX < this.#arrTokensPosition.length
-			&& intY >= 0 && intY < this.#arrTokensPosition[intX].length
+			this.#isCellInGrid(intX, intY)
 			&& this.#arrTokensPosition[intX][intY] === null
 		);
+	}
+	
+	/**
+	/*	Détermine si la case se trouve dans le plateau de jeu
+	/*
+	/*	@return Boolean
+	 */
+	#isCellInGrid(intX, intY)
+	{
+		return intX >= 0 && intX < this.#arrTokensPosition.length
+			&& intY >= 0 && intY < this.#arrTokensPosition[intX].length;
 	}
 	
 	/**
@@ -211,9 +222,15 @@ export class Board
 			this.#objPlayer.setCurrentPosition(posNew);
 			this.#arrTokensPosition[posNew.x][posNew.y] = this.#objPlayer;
 		}
-		else {
+		else if(this.#isCellInGrid(posNew.x, posNew.y)) {
 			
-			console.log('Pas OK');
+			// On récupère l'objet qui bloque le joueur
+			const objObstacle = this.#arrTokensPosition[posNew.x][posNew.y];
+			
+			if(objObstacle.isFightable()) {
+				
+				window.alert(`Combat! ${objObstacle.getCharacterClass()}`);
+			}
 		}
 		/*
 		
