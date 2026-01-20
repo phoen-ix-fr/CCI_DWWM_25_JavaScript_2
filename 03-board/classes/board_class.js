@@ -96,7 +96,11 @@ export class Board
 	 */
 	#isCellAvailable(intX, intY)
 	{
-		
+		return (
+			intX >= 0 && intX < this.#arrTokensPosition.length
+			&& intY >= 0 && intY < this.#arrTokensPosition[intX].length
+			&& this.#arrTokensPosition[intX][intY] === null
+		);
 	}
 	
 	/**
@@ -114,7 +118,7 @@ export class Board
 			// Pour chaque X, on parcours tous les Y
 			for(let y = 0; y < this.#arrTokensPosition[x].length; y++) {
 				
-				if(this.#arrTokensPosition[x][y] === null) {
+				if(this.#isCellAvailable(x, y)) {
 					
 					// console.log(`${x} - ${y} est disponible`);					
 					arrAvailablePos.push({x: x, y: y});
@@ -192,18 +196,35 @@ export class Board
 		// Récupérer la position actuelle du joueur
 		const posCurrent = this.#objPlayer.getCurrentPosition();
 		
-		this.#arrTokensPosition[posCurrent.x][posCurrent.y] = null;
-		
 		// Calcul de la nouvelle position
-		posCurrent.x += dx;
-		posCurrent.y += dy;
+		const posNew = {
+			x: posCurrent.x + dx,
+			y: posCurrent.y + dy
+		};
+		
+		if(this.#isCellAvailable(posNew.x, posNew.y)) {
+			
+			// On retire le joueur de sa position actuelle
+			this.#arrTokensPosition[posCurrent.x][posCurrent.y] = null;
+			
+			// On place le joueur à sa nouvelle position
+			this.#objPlayer.setCurrentPosition(posNew);
+			this.#arrTokensPosition[posNew.x][posNew.y] = this.#objPlayer;
+		}
+		else {
+			
+			console.log('Pas OK');
+		}
+		/*
+		
 		
 		// Deuxième étape mettre à jour la position du joueur
-		this.#objPlayer.setCurrentPosition(posCurrent);
 		
-		this.#arrTokensPosition[posCurrent.x][posCurrent.y] = this.#objPlayer;
+		
 		
 		console.log(this.#objPlayer.getCurrentPosition());
 		console.log(this.#arrTokensPosition);
+		
+		*/
 	}
 }
