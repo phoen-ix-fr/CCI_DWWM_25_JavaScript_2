@@ -1,4 +1,5 @@
 import { Wall } from './wall_class.js';
+import { Enemy } from './enemy_class.js';
 
 function getRandomIntBetween(min, max) {
 	min = Math.ceil(min);
@@ -50,8 +51,14 @@ export class Board
 		this.#arrTokensPosition[4][0] = new Wall();
 		
 		// On place deux autres murs en {3,1} et en {3,2}
+		this.#arrTokensPosition[3][0] = new Wall();
 		this.#arrTokensPosition[3][1] = new Wall();
 		this.#arrTokensPosition[3][2] = new Wall();
+		this.#arrTokensPosition[3][3] = new Wall();
+		this.#arrTokensPosition[3][4] = new Wall();
+		this.#arrTokensPosition[3][5] = new Wall();
+		this.#arrTokensPosition[3][6] = new Wall();
+		this.#arrTokensPosition[3][7] = new Wall();
 		this.#arrTokensPosition[5][2] = new Wall();
 	}
 	
@@ -63,7 +70,11 @@ export class Board
 	 */
 	#generateEnemies(intNumberOfEnemies)
 	{
-		console.log(this.#getRandomAvailableCell());
+		for(let i = 0; i < intNumberOfEnemies; i++) {
+			
+			const intRandEnemyPos = this.#getRandomAvailableCell();		
+			this.#arrTokensPosition[intRandEnemyPos.x][intRandEnemyPos.y] = new Enemy();
+		}
 		
 		// Création d'une DIV correspondante à un ennemi
 		
@@ -93,7 +104,34 @@ export class Board
 	 */
 	#getRandomAvailableCell()
 	{
-		const intRandX = getRandomIntBetween(0, this.#gridSizeWidth);
+		// On récupère uniquement les colonnes (X) qui ont au moins une case de dispo
+		
+		let arrAvailablePos = [];
+		
+		// On parcours tous les X
+		for(let x = 0; x < this.#arrTokensPosition.length; x++) {
+			
+			// Pour chaque X, on parcours tous les Y
+			for(let y = 0; y < this.#arrTokensPosition[x].length; y++) {
+				
+				if(this.#arrTokensPosition[x][y] === null) {
+					
+					// console.log(`${x} - ${y} est disponible`);
+					
+					arrAvailablePos.push({x: x, y: y});
+				}
+			}
+		}
+		
+		const intRand = getRandomIntBetween(0, arrAvailablePos.length - 1)
+		
+		return arrAvailablePos[intRand];		
+		
+		/*
+		
+		const arrAvailableX = [];
+		
+		const intRandX = getRandomIntBetween(0, arrAvailableX.length - 1);
 		
 		const arrAvailableY = this.#arrTokensPosition[intRandX]
 			.map((p, i) => { if(p === null) return i; })
@@ -102,9 +140,11 @@ export class Board
 		const intRandY = getRandomIntBetween(0, arrAvailableY.length -1);
 		
 		return {
-			x: intRandX,
-			y: intRandY
+			x: 0,
+			y: 0
 		};
+		
+		*/
 	}
 	
 	/**
@@ -174,5 +214,7 @@ export class Board
 				
 		// Génère 5 ennemis sur le plateau
 		this.#generateEnemies(5);
+		
+		console.log(this.#arrTokensPosition);
 	}
 }
