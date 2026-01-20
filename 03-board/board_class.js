@@ -1,5 +1,11 @@
 import { Wall } from './wall_class.js';
 
+function getRandomIntBetween(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
 export class Board
 {
 	#gridSizeWidth;
@@ -57,6 +63,7 @@ export class Board
 	 */
 	#generateEnemies(intNumberOfEnemies)
 	{
+		console.log(this.#getRandomAvailableCell());
 		
 		// Création d'une DIV correspondante à un ennemi
 		
@@ -86,7 +93,18 @@ export class Board
 	 */
 	#getRandomAvailableCell()
 	{
+		const intRandX = getRandomIntBetween(0, this.#gridSizeWidth);
 		
+		const arrAvailableY = this.#arrTokensPosition[intRandX]
+			.map((p, i) => { if(p === null) return i; })
+			.filter(i => i !== undefined);
+		
+		const intRandY = getRandomIntBetween(0, arrAvailableY.length -1);
+		
+		return {
+			x: intRandX,
+			y: intRandY
+		};
 	}
 	
 	/**
@@ -122,7 +140,7 @@ export class Board
 		for (let y = 0; y < this.#gridSizeHeight; y++) {
 			for (let x = 0; x < this.#gridSizeWidth; x++) {
 
-				console.log(`(${x},${y}) = ${this.#arrTokensPosition[x][y]}`);
+				// console.log(`(${x},${y}) = ${this.#arrTokensPosition[x][y]}`);
 				
 				// L'objet correspondant à la cellule courante
 				const objCurrentCellObject = this.#arrTokensPosition[x][y];
