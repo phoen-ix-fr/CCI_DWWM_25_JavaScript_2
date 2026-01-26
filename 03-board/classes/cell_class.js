@@ -16,6 +16,11 @@ export class Cell
 		return elDiv;
 	}
 	
+	renderInfos()
+	{
+		return "";
+	}
+	
 	/**
 	/*	Détermine si la case est attaquable (enemis)
 	/*

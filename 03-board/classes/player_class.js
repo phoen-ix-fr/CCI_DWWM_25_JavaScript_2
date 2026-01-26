@@ -40,4 +40,9 @@ export class Player extends Character
 	{
 		return this.#maxXp;
 	}
+	
+	renderInfos()
+	{
+		return "C'est toi...";
+	}
 }

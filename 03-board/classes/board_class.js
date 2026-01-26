@@ -195,7 +195,14 @@ export class Board
 					
 					// On fait appel à la méthode render de l'objet courant
 					// qui nous renvoi un élément de DOM que l'on ajoute à la grid
-					elGridLayer.appendChild(objCurrentCellObject.render());
+					const elCellDiv = objCurrentCellObject.render();
+					
+					elCellDiv.addEventListener('click', () => {
+						
+						this.updateInfosArea(objCurrentCellObject);
+					});
+					
+					elGridLayer.appendChild(elCellDiv);
 				} 
 				else {
 					
@@ -237,7 +244,8 @@ export class Board
 			
 			if(objObstacle.isFightable()) {
 				
-				window.alert(`Combat! ${objObstacle.getCharacterClass()}`);
+				// window.alert(`Combat! ${objObstacle.getCharacterClass()}`);
+				this.updateInfosArea(objObstacle);
 			}
 		}
 	}
@@ -250,33 +258,32 @@ export class Board
 		document.getElementById('player-agility').textContent 	= this.#objPlayer.getAgility();
 		document.getElementById('player-level').textContent 	= this.#objPlayer.getLevel();
 		
+		this.#updateBarInfo('#player-hp', this.#objPlayer.getHp(), this.#objPlayer.getMaxHp());
+		this.#updateBarInfo('#player-xp', this.#objPlayer.getXp(), this.#objPlayer.getMaxXp());	
+	}
+	
+	updateInfosArea(objObstacle)
+	{
+		const elInfoArea = document.getElementById('infos-area');
+		
 		/*
-		const elHpBar = document.querySelector('#player-hp .info-bar div');
-		elHpBar.style.width 
-			= (this.#objPlayer.getHp() / this.#objPlayer.getMaxHp() * 100) + "%";
-		
-		elHpBar.getElementsByClassName('info-bar-value')[0].textContent 
-			= this.#objPlayer.getHp() + "/" + this.#objPlayer.getMaxHp();
-			
-		const elXpBar = document.querySelector('#player-xp .info-bar div');
-		elXpBar.style.width 
-			= (this.#objPlayer.getXp() / this.#objPlayer.getMaxXp() * 100) + "%";
-		
-		elXpBar.getElementsByClassName('info-bar-value')[0].textContent 
-			= this.#objPlayer.getXp() + "/" + this.#objPlayer.getMaxXp();
+		elInfoArea.innerHTML = `
+			<ul>
+				<li>Nom : ${objObstacle.getName()}</li>
+				<li>Classe : ${objObstacle.getCharacterClass()}</li>
+				<li>Niveau : ${objObstacle.getLevel()}</li>
+				<li>HP : ${objObstacle.getHp()} / ${objObstacle.getMaxHp()}</li>
+			</ul>
+		`;
 		*/
 		
-		this.#updateBarInfo('#player-hp', this.#objPlayer.getHp(), this.#objPlayer.getMaxHp());
-		this.#updateBarInfo('#player-xp', this.#objPlayer.getXp(), this.#objPlayer.getMaxXp());
-		
+		elInfoArea.innerHTML = objObstacle.renderInfos();
 	}
 	
 	#updateBarInfo(strContainerId, intValue, intMaxValue)
 	{
 		const elBar = document.querySelector(strContainerId + ' .info-bar div');
-		
 		elBar.style.width = (intValue / intMaxValue * 100) + '%';
-
 		elBar.getElementsByClassName('info-bar-value')[0].textContent = intValue + '/' + intMaxValue; 	
 	}
 }

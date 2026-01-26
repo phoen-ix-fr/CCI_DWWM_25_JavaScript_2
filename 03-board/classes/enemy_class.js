@@ -12,4 +12,16 @@ export class Enemy extends Character
 		// Un ennemi est attaquable
 		this._isFightable = true;
 	}
+	
+	renderInfos()
+	{
+		return `
+			<ul>
+				<li>Nom : ${this.getName()}</li>
+				<li>Classe : ${this.getCharacterClass()}</li>
+				<li>Niveau : ${this.getLevel()}</li>
+				<li>HP : ${this.getHp()} / ${this.getMaxHp()}</li>
+			</ul>
+		`;
+	}
 }

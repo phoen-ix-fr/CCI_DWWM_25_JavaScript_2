@@ -8,4 +8,9 @@ export class Wall extends Cell
 		// Spécifie un type particulier
 		this._type = 'wall';
 	}
+	
+	renderInfos()
+	{
+		return "C'est un mur...";
+	}
 }
