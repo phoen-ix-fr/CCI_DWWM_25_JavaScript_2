@@ -178,6 +178,8 @@ main {
 	font-weight: bold;
 }
 
+/* Inventaire (grid) */
+
 #slots
 {
 	height: 40px;
@@ -191,12 +193,52 @@ main {
 	gap: 2px;
 	
 	justify-content: center;
+	
+	margin-bottom: 20px;
 }
 
 #slots .slot
 {
 	background-color: white;
     border-radius: 5px;
+}
+
+/* Barres de points de vie et d'XP */
+#player-hp, #player-xp {
+	display: grid;
+	grid-template-columns: 10% 90%;
+	margin-top: 5px;
+}
+
+#inventory .info-bar {
+	background-color: #f1f1f1;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+#player-hp *, 
+#player-xp * {
+	margin: 0;
+	padding: 0;
+}
+
+#inventory .info-bar div {	
+	height: 24px;
+	font-size: small;
+}
+
+#inventory .info-bar div .info-bar-value {
+	font-weight: normal;
+	padding-left: 10px;
+	color: #321654;
+}
+
+#player-hp .info-bar div {
+	background-color: #f44336;
+}
+
+#player-xp .info-bar div {
+	background-color: #4CAF50;
 }
 
 /* SELECTION INFOS (INFOS-AREA) -------------------------------------------------------*/
