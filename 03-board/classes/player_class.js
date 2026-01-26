@@ -45,4 +45,15 @@ export class Player extends Character
 	{
 		return "C'est toi...";
 	}
+	
+	/**
+	/*	Surcharge de la méthode toJson() de la classe Object
+	/*	@see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+	/*
+	/* Par défaut : {"_type":"player","_isFightable":false,"_characterClass":"Archer","_name":"Legolas","_hp":100,"_maxHp":100,"_strength":50,"_agility":300,"_level":1}
+	*/
+	toJSON(key)
+	{
+		return "";
+	}
 }

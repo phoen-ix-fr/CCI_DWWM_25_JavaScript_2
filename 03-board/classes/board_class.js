@@ -312,5 +312,8 @@ export class Board
 		
 		// Sauvegarde la date de la dernière Sauvegarde
 		localStorage.setItem("Save_Timestamp", Date.now());
+		
+		// Provisoire le temps du developpement des méthodes toJSON
+		localStorage.setItem("Player", JSON.stringify(this.#objPlayer));
 	}
 }
