@@ -311,9 +311,15 @@ export class Board
 		localStorage.setItem("Board", JSON.stringify(this.#arrTokensPosition));
 		
 		// Sauvegarde la date de la dernière Sauvegarde
-		localStorage.setItem("Save_Timestamp", Date.now());
+		const dteNowDate = Date.now();
+		localStorage.setItem("Save_Timestamp", dteNowDate);
 		
 		// Provisoire le temps du developpement des méthodes toJSON
 		localStorage.setItem("Player", JSON.stringify(this.#objPlayer));
+		
+		const options 		  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
+		const dteCurrentDate  = new Date(dteNowDate);
+		
+		document.querySelector('#save-game p span').textContent = dteCurrentDate.toLocaleDateString('fr-FR', options);
 	}
 }

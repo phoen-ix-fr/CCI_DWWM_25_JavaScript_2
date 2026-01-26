@@ -71,4 +71,19 @@ export class Character extends Cell
 	{
 		return this._maxHp;
 	}
+	
+	toJSON(key)
+	{
+		// On construit un objet littéral à partir de l'objet courant
+		return {
+			type: this._type,
+			name: this._name,
+			characterClass: this._characterClass,
+			hp: this._hp,
+			maxHp: this._maxHp,
+			strength: this._strength,
+			agility: this._agility,
+			level: this._level
+		};		
+	}
 }

@@ -13,4 +13,11 @@ export class Wall extends Cell
 	{
 		return "C'est un mur...";
 	}
+	
+	toJSON()
+	{
+		return {
+			type: this._type
+		};
+	}
 }

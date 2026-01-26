@@ -50,10 +50,33 @@ export class Player extends Character
 	/*	Surcharge de la méthode toJson() de la classe Object
 	/*	@see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
 	/*
-	/* Par défaut : {"_type":"player","_isFightable":false,"_characterClass":"Archer","_name":"Legolas","_hp":100,"_maxHp":100,"_strength":50,"_agility":300,"_level":1}
+	/*  Par défaut : {"_type":"player","_isFightable":false,"_characterClass":"Archer","_name":"Legolas","_hp":100,"_maxHp":100,"_strength":50,"_agility":300,"_level":1}
 	*/
 	toJSON(key)
 	{
-		return "";
+		// Comportement global au niveau de la classe Character
+		const jsonParent 	= super.toJSON(key);
+		
+		// On rajoute ce qui est spécifique à la classe Player
+		jsonParent.xp 		= this.#xp;
+		jsonParent.maxXp 	= this.#maxXp;
+		
+		return jsonParent;
+		
+		/*
+		// On construit un objet littéral à partir de l'objet courant
+		return {
+			type: this._type,
+			name: this._name,
+			characterClass: this._characterClass,
+			hp: this._hp,
+			maxHp: this._maxHp,
+			strength: this._strength,
+			agility: this._agility,
+			level: this._level,
+			xp: this.#xp,
+			maxXp: this.#maxXp
+		};
+		*/
 	}
 }

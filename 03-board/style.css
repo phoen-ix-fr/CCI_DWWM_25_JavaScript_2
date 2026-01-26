@@ -268,3 +268,8 @@ main {
 	margin: 0;
 	font-size: small;
 }
+
+#save-game p span {
+	display: block;
+	color: #000000;
+}
