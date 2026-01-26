@@ -1,3 +1,8 @@
+* {
+	font-family: system-ui;
+	color: white;
+}
+
 main {
 	
     width: 750px; /* 380 + 350 + 20 */
@@ -9,6 +14,8 @@ main {
     
     grid-template-columns: 380px 350px;
 }
+
+/* GRID GAME --------------------------------------------------------------------------*/
 
 #grid-game {
 	/* max-width: 380px; La gestion de la largeur est fait dans le main */  
@@ -77,13 +84,26 @@ main {
 	background-color: rgba(255, 99, 71, 0.4);
 }
 
-#battle-area {
-	  
+/* GRID ASIDE -------------------------------------------------------------------------*/
+#grid-aside {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+#battle-area, #inventory, #infos-area {	  
+
 	padding: 16px; 
 
 	background: #321654;
 	border-radius: 15px;
 	box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+/* BATTLE AREA ------------------------------------------------------------------------*/
+# battle-area
+{
+	
 }
 
 #dices
@@ -121,3 +141,62 @@ main {
     padding: 5px 10px;
     font-weight: 600;
 }
+
+/* PLAYER INFOS (INVENTORY) -----------------------------------------------------------*/
+#inventory > p 
+{
+	text-transform: uppercase;
+	text-align: center;	
+	
+	margin: 0;
+	padding: 0;
+	font-size: small;
+	font-weight: bold;
+}
+
+#caracteristics
+{
+	display: flex;
+	justify-content: space-between;
+	margin: 10px 0 20px 0;
+	padding: 0;
+}
+
+#caracteristics li
+{
+	list-style: none;
+	text-align: center;
+}
+
+#caracteristics li span.key
+{
+	font-size: small;
+}
+
+#caracteristics li span.value
+{
+	font-weight: bold;
+}
+
+#slots
+{
+	height: 40px;
+	
+	display: grid;
+	
+	grid-template-columns: repeat(7, 40px);
+	/* Idem que : grid-template-columns: 40px 40px 40px 40px 40px 40px 40px; */
+	
+	grid-template-rows: 40px;
+	gap: 2px;
+	
+	justify-content: center;
+}
+
+#slots .slot
+{
+	background-color: white;
+    border-radius: 5px;
+}
+
+/* SELECTION INFOS (INFOS-AREA) -------------------------------------------------------*/
