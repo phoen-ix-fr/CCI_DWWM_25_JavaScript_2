@@ -33,3 +33,9 @@ document.addEventListener("keydown", (e) => {
 	
 	objBoard.render(); //< Met à jour l'affichage
 });
+
+// Test d'utilisation de localStorage
+localStorage.setItem("Player Name", "Legolas");
+
+const strPlayerName = localStorage.getItem("Player Name");
+console.log(strPlayerName);

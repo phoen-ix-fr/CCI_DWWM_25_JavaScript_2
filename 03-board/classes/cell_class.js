@@ -11,7 +11,11 @@ export class Cell
 	render()
 	{
 		const elDiv = document.createElement("div");
-		elDiv.className = this._type;
+		elDiv.classList.add(this._type);
+		
+		if(this._isSelected) {
+			elDiv.classList.add('selected');
+		}
 		
 		return elDiv;
 	}

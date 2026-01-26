@@ -242,3 +242,29 @@ main {
 }
 
 /* SELECTION INFOS (INFOS-AREA) -------------------------------------------------------*/
+
+
+
+
+/* BOUTON SAUVEGARDE ------------------------------------------------------------------*/
+#save-game {
+	display: flex;
+	flex-direction: rows;
+	gap: 20px;
+	align-items: center;
+}
+
+#save-game button
+{
+	background-color: #321654;
+	border-radius: 10px;
+	padding: 5px 10px;
+	font-weight: bold;
+}
+
+#save-game p {
+	color: #000000;
+	padding: 0;
+	margin: 0;
+	font-size: small;
+}

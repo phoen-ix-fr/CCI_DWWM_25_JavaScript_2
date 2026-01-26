@@ -21,6 +21,8 @@ export class Board
 	
 	#objPlayer;
 	
+	#gameMode = 'exploration';
+	
 	constructor(sizeWidth, sizeHeight, strGridGameId, strPlayerInfoId)
 	{
 		this.#gridSizeWidth  = sizeWidth;
@@ -52,15 +54,28 @@ export class Board
 		this.#generateEnemies(2, 'Warrior', "Guerrier Orc");
 		this.#generateEnemies(3, 'Firespirit', "Feu follet");
 		
-		console.log(this.#arrTokensPosition);
+		this.#gameMode = 'exploration';
 	}
 	
 	#initialisePlayer()
-	{
-		// On créer un joueur sur la position (0,0)
-		this.#objPlayer = new Player('Archer', 'Legolas', 100, 100, 50, 300, 1, {x: 0, y: 0}, 0, 100);
+	{		
+		// Vérifier si une position est stockée en localStorage
+		const strLocalStPosition = localStorage.getItem('Player Position');
 		
-		this.#arrTokensPosition[0][0] = this.#objPlayer;
+		// Valeur par défaut : position (0, 0)
+		let objPosition = {x: 0, y: 0};
+		
+		// strLocalStPosition !== null
+		if(strLocalStPosition) {
+			
+			// On écrase la valeur par défaut par la valeur en localStorage
+			objPosition = JSON.parse(strLocalStPosition);
+		}
+	
+		// On créer un joueur sur la position (0,0)
+		this.#objPlayer = new Player('Archer', 'Legolas', 100, 100, 50, 300, 1, objPosition, 0, 100);
+		
+		this.#arrTokensPosition[objPosition.x][objPosition.y] = this.#objPlayer;
 	}
 	
 	/**
@@ -216,9 +231,7 @@ export class Board
 	}
 	
 	movePlayer(dx, dy)
-	{
-		console.log(`Déplacement du joueur: ${dx}, ${dy}`);
-		
+	{		
 		// Récupérer la position actuelle du joueur
 		const posCurrent = this.#objPlayer.getCurrentPosition();
 		
@@ -236,6 +249,9 @@ export class Board
 			// On place le joueur à sa nouvelle position
 			this.#objPlayer.setCurrentPosition(posNew);
 			this.#arrTokensPosition[posNew.x][posNew.y] = this.#objPlayer;
+			
+			// Sauvegarder la position du joueur en localStorage
+			localStorage.setItem("Player Position", JSON.stringify(posNew));		
 		}
 		else if(this.#isCellInGrid(posNew.x, posNew.y)) {
 			
@@ -243,6 +259,8 @@ export class Board
 			const objObstacle = this.#arrTokensPosition[posNew.x][posNew.y];
 			
 			if(objObstacle.isFightable()) {
+				
+				this.#gameMode = 'fight';
 				
 				// window.alert(`Combat! ${objObstacle.getCharacterClass()}`);
 				this.updateInfosArea(objObstacle);
