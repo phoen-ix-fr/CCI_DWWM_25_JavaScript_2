@@ -304,4 +304,13 @@ export class Board
 		elBar.style.width = (intValue / intMaxValue * 100) + '%';
 		elBar.getElementsByClassName('info-bar-value')[0].textContent = intValue + '/' + intMaxValue; 	
 	}
+	
+	saveToLocal()
+	{
+		// Sauvegarde l'état / position des jetons en localStorage
+		localStorage.setItem("Board", JSON.stringify(this.#arrTokensPosition));
+		
+		// Sauvegarde la date de la dernière Sauvegarde
+		localStorage.setItem("Save_Timestamp", Date.now());
+	}
 }
