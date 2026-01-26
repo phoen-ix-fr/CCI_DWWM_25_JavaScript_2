@@ -49,8 +49,8 @@ export class Board
 		
 		this.#initialisePlayer();
 		
-		this.#generateEnemies(2, 'warrior', "Guerrier Orc");
-		this.#generateEnemies(3, 'firespirit', "Feu follet");
+		this.#generateEnemies(2, 'Warrior', "Guerrier Orc");
+		this.#generateEnemies(3, 'Firespirit', "Feu follet");
 		
 		console.log(this.#arrTokensPosition);
 	}
@@ -58,7 +58,7 @@ export class Board
 	#initialisePlayer()
 	{
 		// On créer un joueur sur la position (0,0)
-		this.#objPlayer = new Player('archer', 'Legolas', 100, 100, 50, 300, 1, {x: 0, y: 0}, 0, 100);
+		this.#objPlayer = new Player('Archer', 'Legolas', 100, 100, 50, 300, 1, {x: 0, y: 0}, 0, 100);
 		
 		this.#arrTokensPosition[0][0] = this.#objPlayer;
 	}
@@ -244,6 +244,39 @@ export class Board
 	
 	updatePlayerInfos()
 	{
+		document.getElementById('player-name').textContent 		= this.#objPlayer.getName();
+		document.getElementById('player-class').textContent 	= this.#objPlayer.getCharacterClass();
+		document.getElementById('player-strength').textContent 	= this.#objPlayer.getStrength();
+		document.getElementById('player-agility').textContent 	= this.#objPlayer.getAgility();
+		document.getElementById('player-level').textContent 	= this.#objPlayer.getLevel();
 		
+		/*
+		const elHpBar = document.querySelector('#player-hp .info-bar div');
+		elHpBar.style.width 
+			= (this.#objPlayer.getHp() / this.#objPlayer.getMaxHp() * 100) + "%";
+		
+		elHpBar.getElementsByClassName('info-bar-value')[0].textContent 
+			= this.#objPlayer.getHp() + "/" + this.#objPlayer.getMaxHp();
+			
+		const elXpBar = document.querySelector('#player-xp .info-bar div');
+		elXpBar.style.width 
+			= (this.#objPlayer.getXp() / this.#objPlayer.getMaxXp() * 100) + "%";
+		
+		elXpBar.getElementsByClassName('info-bar-value')[0].textContent 
+			= this.#objPlayer.getXp() + "/" + this.#objPlayer.getMaxXp();
+		*/
+		
+		this.#updateBarInfo('#player-hp', this.#objPlayer.getHp(), this.#objPlayer.getMaxHp());
+		this.#updateBarInfo('#player-xp', this.#objPlayer.getXp(), this.#objPlayer.getMaxXp());
+		
+	}
+	
+	#updateBarInfo(strContainerId, intValue, intMaxValue)
+	{
+		const elBar = document.querySelector(strContainerId + ' .info-bar div');
+		
+		elBar.style.width = (intValue / intMaxValue * 100) + '%';
+
+		elBar.getElementsByClassName('info-bar-value')[0].textContent = intValue + '/' + intMaxValue; 	
 	}
 }

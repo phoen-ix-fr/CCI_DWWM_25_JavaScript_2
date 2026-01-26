@@ -32,7 +32,7 @@ export class Character extends Cell
 		const elDiv = super.render();
 		
 		// Rajouter le background image spécifique au characterClass
-		elDiv.style.backgroundImage = `url("assets/${this._type}_${this._characterClass}.png")`;
+		elDiv.style.backgroundImage = `url("assets/${this._type}_${this._characterClass.toLowerCase()}.png")`;
 		
 		return elDiv;
 	}
@@ -40,5 +40,35 @@ export class Character extends Cell
 	getCharacterClass()
 	{
 		return this._characterClass;
+	}
+	
+	getName()
+	{
+		return this._name;
+	}
+	
+	getStrength()
+	{
+		return this._strength;
+	}
+	
+	getAgility()
+	{
+		return this._agility;
+	}
+	
+	getLevel()
+	{
+		return this._level;
+	}
+	
+	getHp()
+	{
+		return this._hp;
+	}
+	
+	getMaxHp()
+	{
+		return this._maxHp;
 	}
 }

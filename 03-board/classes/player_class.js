@@ -30,4 +30,14 @@ export class Player extends Character
 	{
 		this.#posCurrent = posNewPosition;
 	}
+	
+	getXp()
+	{
+		return this.#xp;
+	}
+	
+	getMaxXp()
+	{
+		return this.#maxXp;
+	}
 }
