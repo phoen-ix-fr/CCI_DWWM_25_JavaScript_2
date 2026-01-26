@@ -1,8 +1,11 @@
 import { Board } from './classes/board_class.js';
 
-let objBoard = new Board(8, 8, "grid-game");
+// Board(WIDTH, HEIGHT, ID de la DIV du plateau, ID de la DIV des infos du joueur
+let objBoard = new Board(8, 8, "grid-game", "inventory");
 
 objBoard.render();
+
+objBoard.updatePlayerInfos();
 
 // Ecoute de l'évènement de touche du clavier
 document.addEventListener("keydown", (e) => {

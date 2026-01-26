@@ -15,11 +15,13 @@ export class Board
 	
 	#elGridGame;
 	
+	#elPlayerInfos;
+	
 	#arrTokensPosition;	//< Stocke de manière logique la position des jetons sur le plateau
 	
 	#objPlayer;
 	
-	constructor(sizeWidth, sizeHeight, strGridGameId)
+	constructor(sizeWidth, sizeHeight, strGridGameId, strPlayerInfoId)
 	{
 		this.#gridSizeWidth  = sizeWidth;
 		this.#gridSizeHeight = sizeHeight;
@@ -27,6 +29,9 @@ export class Board
 		// On récupère l'élément DIV grid-game dans le constructeur 
 		// pour le réutiliser dans plusieurs méthodes
 		this.#elGridGame 	 = document.getElementById(strGridGameId);
+		
+		// On récupère l'élément DIV qui affiche les infos du joueur
+		this.#elPlayerInfos	 = document.getElementById(strPlayerInfoId);
 		
 		// On créée un tableau à deux dimensions (X = largeur, Y = hauteur)
 		// On créée les lignes (X) :
@@ -44,14 +49,16 @@ export class Board
 		
 		this.#initialisePlayer();
 		
-		this.#generateEnemies(2);
-		this.#generateEnemies(3, 'firespirit');
+		this.#generateEnemies(2, 'warrior', "Guerrier Orc");
+		this.#generateEnemies(3, 'firespirit', "Feu follet");
+		
+		console.log(this.#arrTokensPosition);
 	}
 	
 	#initialisePlayer()
 	{
 		// On créer un joueur sur la position (0,0)
-		this.#objPlayer = new Player('archer', {x: 0, y: 0});
+		this.#objPlayer = new Player('archer', 'Legolas', 100, 100, 50, 300, 1, {x: 0, y: 0}, 0, 100);
 		
 		this.#arrTokensPosition[0][0] = this.#objPlayer;
 	}
@@ -81,12 +88,13 @@ export class Board
 	/*	@param Integer intNumberOfEnemies Nombre d'ennemis à générer
 	/*
 	 */
-	#generateEnemies(intNumberOfEnemies, strCharacterClass = 'warrior')
+	#generateEnemies(intNumberOfEnemies, strCharacterClass, strName)
 	{
 		for(let i = 0; i < intNumberOfEnemies; i++) {
 			
 			const intRandEnemyPos = this.#getRandomAvailableCell();		
-			this.#arrTokensPosition[intRandEnemyPos.x][intRandEnemyPos.y] = new Enemy(strCharacterClass);
+			this.#arrTokensPosition[intRandEnemyPos.x][intRandEnemyPos.y] 
+				= new Enemy(strCharacterClass, strName, 50, 50, 50, 50, 1);
 		}		
 	}
 	
@@ -232,16 +240,10 @@ export class Board
 				window.alert(`Combat! ${objObstacle.getCharacterClass()}`);
 			}
 		}
-		/*
+	}
+	
+	updatePlayerInfos()
+	{
 		
-		
-		// Deuxième étape mettre à jour la position du joueur
-		
-		
-		
-		console.log(this.#objPlayer.getCurrentPosition());
-		console.log(this.#arrTokensPosition);
-		
-		*/
 	}
 }

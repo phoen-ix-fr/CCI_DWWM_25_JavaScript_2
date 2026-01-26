@@ -4,10 +4,26 @@ export class Character extends Cell
 {
 	_characterClass;
 	
-	constructor(strCharacterClass) {
+	_name; 				//< Nom du personnage, visibilité en protégée (_)
+	
+	_hp;
+	_maxHp;
+	
+	_strength; 			//< Force du personnage (liée aux dégats infligés)
+	_agility; 			//< Agilité du personnage (liée aux dégâts reçus)
+	
+	_level;				//< Niveau du personnage
+	
+	constructor(strCharacterClass, name, hp, maxHp, strength, agility, level) {
 		super();
 		
-		this._characterClass = strCharacterClass;
+		this._characterClass 	= strCharacterClass;
+		this._name 				= name;
+		this._hp 				= hp;
+		this._maxHp 			= maxHp;
+		this._strength 			= strength;
+		this._agility 			= agility;
+		this._level 			= level;
 	}
 
 	render()

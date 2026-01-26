@@ -2,25 +2,32 @@ import { Character } from './character_class.js';
 
 export class Player extends Character
 {
-	_posCurrent; 	//< Position courante du joueur
+	#posCurrent; 	//< Position courante du joueur
 	
-	constructor(strCharacterClass, posCurrent)
+	#xp;			//< Gestion des points d'expérience
+	#maxXp;
+	
+	constructor(strCharacterClass, name, hp, maxHp, strength, agility, level, posCurrent, xp, maxXp)
 	{
-		super(strCharacterClass);
+		// Appel du constructeur parent en transmettant tous les paramètres nécessaires
+		super(strCharacterClass, name, hp, maxHp, strength, agility, level);
 		
 		// Spécifie un type particulier
-		this._type = 'player';
+		this._type		 = 'player';
 		
-		this._posCurrent = posCurrent;
+		this.#posCurrent = posCurrent;
+		
+		this.#xp = xp;
+		this.#maxXp = maxXp;
 	}
 
 	getCurrentPosition()
 	{
-		return this._posCurrent;
+		return this.#posCurrent;
 	}
 	
 	setCurrentPosition(posNewPosition)
 	{
-		this._posCurrent = posNewPosition;
+		this.#posCurrent = posNewPosition;
 	}
 }
