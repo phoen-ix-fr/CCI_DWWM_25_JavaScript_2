@@ -79,4 +79,17 @@ export class Player extends Character
 		};
 		*/
 	}
+	
+	/**
+	/*	
+	 */
+	static fromJSON(objJson, posPlayer)
+	{
+		const objPlayer = new Player(objJson.characterClass, 
+			objJson.name, objJson.hp, objJson.maxHp, 
+			objJson.strength, objJson.agility, objJson.level,
+			posPlayer, objJson.xp, objJson.maxXp);
+		
+		return objPlayer;
+	}
 }

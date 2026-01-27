@@ -53,6 +53,9 @@ export class Board
 		// Si on a des infos en local Storage, alors on désérialise les objets
 		if(strBoardLocalStorage) {
 			
+			// On récupère la date de la sauvegarde depuis le localStorage
+			this.#updateSaveDate(localStorage.getItem('Save_Timestamp'));
+			
 			const objBoardLocalStorage = JSON.parse(strBoardLocalStorage);
 			
 			for (let x = 0; x < objBoardLocalStorage.length; x++) {
@@ -63,7 +66,8 @@ export class Board
 					switch(objBoardLocalStorage[x][y]?.type)
 					{
 						case 'player':
-							//this.#arrTokensPosition[x][y] = new ....
+							this.#objPlayer = Player.fromJSON(objBoardLocalStorage[x][y], {x: x, y: y});
+							this.#arrTokensPosition[x][y] = this.#objPlayer;	
 							break;
 							
 						case 'enemy':
@@ -376,11 +380,21 @@ export class Board
 		// Provisoire le temps du developpement des méthodes toJSON
 		// localStorage.setItem("Player", JSON.stringify(this.#objPlayer));
 		
+		/*
 		const options 		  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
 		const dteCurrentDate  = new Date(dteNowDate);
 		
 		document.querySelector('#save-game p span').textContent = dteCurrentDate.toLocaleDateString('fr-FR', options);
+		*/
+		
+		this.#updateSaveDate(dteNowDate);
 	}
 	
-	
+	#updateSaveDate(strTimestamp)
+	{		
+		const options 		  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
+		const dteCurrentDate  = new Date(parseInt(strTimestamp));
+		
+		document.querySelector('#save-game p span').textContent = dteCurrentDate.toLocaleDateString('fr-FR', options);
+	}
 }
