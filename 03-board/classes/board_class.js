@@ -2,6 +2,7 @@ import { Wall } from './wall_class.js';
 import { Enemy } from './enemy_class.js';
 import { Player } from './player_class.js';
 import { Door } from './door_class.js';
+import { Chest } from './chest_class.js';
 
 function getRandomIntBetween(min, max) {
 	min = Math.ceil(min);
@@ -131,6 +132,11 @@ export class Board
 				
 				// On parcours les coffres (chests)
 				// TODO Créer les classes correspondantes
+				data.chests.forEach(c => {
+					
+					// c.isOpened = true; //< Pour tester l'affichage du coffre ouvert
+					this.#arrTokensPosition[c.position.x][c.position.y] = Chest.fromJSON(c);
+				});
 				
 				// On parcours les portes (doors)
 				// TODO Créer les classes correspondantes

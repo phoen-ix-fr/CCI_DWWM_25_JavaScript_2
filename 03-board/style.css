@@ -53,7 +53,7 @@ main {
 	gap: 2px; 
 }
 
-.cell, .wall, .player, .enemy, .door {
+.cell, .wall, .player, .enemy, .door, .chest {
     width: 40px;
     height: 40px;	
 	
@@ -62,7 +62,7 @@ main {
 	border: 1px solid black;
 }
 
-.cell, .door {
+.cell, .door, .chest  {
     background-color: #e6e6e6;
 }
 
@@ -72,6 +72,10 @@ main {
 
 .door {
     background-image: url("assets/door.png");
+	background-size: cover;
+}
+
+.chest {
 	background-size: cover;
 }
 
