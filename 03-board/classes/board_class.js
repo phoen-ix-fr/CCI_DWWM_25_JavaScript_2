@@ -47,14 +47,26 @@ export class Board
 			this.#arrTokensPosition[i].fill(null); 
 		}
 		
-		this.#generateWalls();
+		// Chargement du contenu du Local Storage
+		const strBoardLocalStorage = localStorage.getItem('Board');
 		
-		this.#initialisePlayer();
+		// Si on a des infos en local Storage, alors on désérialise les objets
+		if(strBoardLocalStorage) {
+			
+			window.alert('Données présentes en local Storage');
+			
+			console.log(strBoardLocalStorage);
+		}
+		else {
 		
-		this.#generateEnemies(2, 'Warrior', "Guerrier Orc");
-		this.#generateEnemies(3, 'Firespirit', "Feu follet");
-		
-		this.#gameMode = 'exploration';
+			// Sinon, on génère comme avant		
+			this.#generateWalls();
+			
+			this.#initialisePlayer();
+			
+			this.#generateEnemies(2, 'Warrior', "Guerrier Orc");
+			this.#generateEnemies(3, 'Firespirit', "Feu follet");
+		}
 	}
 	
 	#initialisePlayer()
@@ -230,6 +242,12 @@ export class Board
 		}
 	}
 	
+	/**
+	/*	Déplace le joueur sur le plateau
+	/*	
+	/*	@param Integer dx Nombre de cases en X
+	/*	@param Integer dy Nombre de cases en Y
+	 */
 	movePlayer(dx, dy)
 	{		
 		// Récupérer la position actuelle du joueur
@@ -268,6 +286,9 @@ export class Board
 		}
 	}
 	
+	/**
+	/*	Met à jour la partie de droite des informations du joueur
+	 */
 	updatePlayerInfos()
 	{
 		document.getElementById('player-name').textContent 		= this.#objPlayer.getName();
@@ -298,6 +319,13 @@ export class Board
 		elInfoArea.innerHTML = objObstacle.renderInfos();
 	}
 	
+	/**
+	/*	Permet de mettre à jour une bar de progression (progressbar)
+	/*
+	/*	@param String strContainerId DIV qui contient la progress-bar
+	/*	@param Int intValue Valeur courante
+	/*	@param Int intMaxValue Valeur maximale de la progress-bar
+	 */
 	#updateBarInfo(strContainerId, intValue, intMaxValue)
 	{
 		const elBar = document.querySelector(strContainerId + ' .info-bar div');
@@ -305,6 +333,9 @@ export class Board
 		elBar.getElementsByClassName('info-bar-value')[0].textContent = intValue + '/' + intMaxValue; 	
 	}
 	
+	/**
+	/*	Sauvegarde de l'état du plateau dans le stockage localName
+	 */
 	saveToLocal()
 	{
 		// Sauvegarde l'état / position des jetons en localStorage
@@ -315,11 +346,13 @@ export class Board
 		localStorage.setItem("Save_Timestamp", dteNowDate);
 		
 		// Provisoire le temps du developpement des méthodes toJSON
-		localStorage.setItem("Player", JSON.stringify(this.#objPlayer));
+		// localStorage.setItem("Player", JSON.stringify(this.#objPlayer));
 		
 		const options 		  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
 		const dteCurrentDate  = new Date(dteNowDate);
 		
 		document.querySelector('#save-game p span').textContent = dteCurrentDate.toLocaleDateString('fr-FR', options);
 	}
+	
+	
 }
