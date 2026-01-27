@@ -85,10 +85,15 @@ export class Board
 							break;
 					}
 				}
-			}			
+			}
+
+			// On affiche les informations
+			this.render();
+			this.updatePlayerInfos();			
 		}
 		else {
 		
+			/*
 			// Sinon, on génère comme avant		
 			this.#generateWalls();
 			
@@ -96,9 +101,41 @@ export class Board
 			
 			this.#generateEnemies(2, 'Warrior', "Guerrier Orc");
 			this.#generateEnemies(3, 'Firespirit', "Feu follet");
+			*/
+			
+			// Chargement du plateau depuis l'API
+			// Requête Asynchrone pour récupérer le template de plateau de niveau 1
+			fetch('https://cci-api-jdr.phoen-ix.net/api/boards/1', {
+				method: 'GET',
+				headers: { 'Content-Type': 'application/json' }
+			})
+			.then(response => response.json())
+			.then(data => {
+				
+				// On parcours tous les ennemis renvoyés par l'API
+				data.ennemies.forEach(e => {
+					
+					this.#arrTokensPosition[e.position.x][e.position.y] = Enemy.fromJSON(e);
+				});
+				
+				// On parcours tous les murs renvoyés par l'API
+				data.walls.forEach(w => {
+					
+					this.#arrTokensPosition[w.position.x][w.position.y] = new Wall();
+				});
+				
+				// Création du joueur, les données sont pour l'instant en dur
+				// l'API ne renvoi que la position initiale du joueur
+				this.#objPlayer = new Player('Archer', 'Legolas', 100, 100, 50, 300, 1, data.player.position, 0, 100);
+				this.#arrTokensPosition[data.player.position.x][data.player.position.y] 
+					= this.#objPlayer;
+				
+				// On affiche une fois que les données sont traitées
+				this.render();
+				this.updatePlayerInfos();
+				
+			}).catch(error => console.error('Error: ', error));
 		}
-		
-		console.log(this.#arrTokensPosition);
 	}
 	
 	#initialisePlayer()
