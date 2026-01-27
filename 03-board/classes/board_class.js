@@ -1,6 +1,7 @@
 import { Wall } from './wall_class.js';
 import { Enemy } from './enemy_class.js';
 import { Player } from './player_class.js';
+import { Door } from './door_class.js';
 
 function getRandomIntBetween(min, max) {
 	min = Math.ceil(min);
@@ -83,6 +84,10 @@ export class Board
 						case 'wall':
 							this.#arrTokensPosition[x][y] = new Wall();					
 							break;
+							
+						case 'door':
+							this.#arrTokensPosition[x][y] = Door.fromJSON(objBoardLocalStorage[x][y]);
+							break;
 					}
 				}
 			}
@@ -122,6 +127,16 @@ export class Board
 				data.walls.forEach(w => {
 					
 					this.#arrTokensPosition[w.position.x][w.position.y] = new Wall();
+				});
+				
+				// On parcours les coffres (chests)
+				// TODO Créer les classes correspondantes
+				
+				// On parcours les portes (doors)
+				// TODO Créer les classes correspondantes
+				data.doors.forEach(d => {
+					
+					this.#arrTokensPosition[d.position.x][d.position.y] = Door.fromJSON(d);
 				});
 				
 				// Création du joueur, les données sont pour l'instant en dur
