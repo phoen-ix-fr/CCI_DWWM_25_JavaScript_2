@@ -53,9 +53,35 @@ export class Board
 		// Si on a des infos en local Storage, alors on désérialise les objets
 		if(strBoardLocalStorage) {
 			
-			window.alert('Données présentes en local Storage');
+			const objBoardLocalStorage = JSON.parse(strBoardLocalStorage);
 			
-			console.log(strBoardLocalStorage);
+			for (let x = 0; x < objBoardLocalStorage.length; x++) {
+				for (let y = 0; y < objBoardLocalStorage[x].length; y++) {
+					
+					console.log(`(${x}, ${y}): ${objBoardLocalStorage[x][y]?.type}`);
+					
+					switch(objBoardLocalStorage[x][y]?.type)
+					{
+						case 'player':
+							//this.#arrTokensPosition[x][y] = new ....
+							break;
+							
+						case 'enemy':
+							/*
+							const objEnemy = new Enemy();
+							objEnemy.fromJson(objBoardLocalStorage[x][y]);
+							*/
+							
+							// Utilisation d'une méthode statique pour instancier notre objet à partir du JSON
+							this.#arrTokensPosition[x][y] = Enemy.fromJSON(objBoardLocalStorage[x][y]);						
+							break;
+							
+						case 'wall':
+							this.#arrTokensPosition[x][y] = new Wall();					
+							break;
+					}
+				}
+			}			
 		}
 		else {
 		
@@ -67,6 +93,8 @@ export class Board
 			this.#generateEnemies(2, 'Warrior', "Guerrier Orc");
 			this.#generateEnemies(3, 'Firespirit', "Feu follet");
 		}
+		
+		console.log(this.#arrTokensPosition);
 	}
 	
 	#initialisePlayer()

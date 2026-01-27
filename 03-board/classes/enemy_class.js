@@ -24,4 +24,18 @@ export class Enemy extends Character
 			</ul>
 		`;
 	}
+	
+	/**
+	/*	
+	 */
+	static fromJSON(objJson)
+	{
+		// Instanciation d'un nouvel objet avec les infos du JSON
+		const objEnemy = new Enemy(objJson.characterClass, 
+			objJson.name, objJson.hp, objJson.maxHp, 
+			objJson.strength, objJson.agility, objJson.level
+		);
+		
+		return objEnemy;	
+	}
 }
