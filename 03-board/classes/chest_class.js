@@ -10,6 +10,9 @@ export class Chest extends Cell
 		// Spécifie un type particulier
 		this._type = 'chest';
 		
+		// Le coffre contient un butin
+		this._isLootable = true;
+		
 		// Par défaut, le coffre est fermé
 		this.#isOpened = isOpened??false;
 	}

@@ -373,6 +373,14 @@ export class Board
 				// window.alert(`Combat! ${objObstacle.getCharacterClass()}`);
 				this.updateInfosArea(objObstacle);
 			}
+			else if(objObstacle.isLootable()) {
+				
+				window.alert("On peut ramasser truc c'est trop chouette!!");
+			}
+			else if(objObstacle.isCrossable()) {
+				
+				window.alert(`On peut le traverser pour changer de niveau : ${objObstacle.getTargetLevel()}`);
+			}
 		}
 	}
 	

@@ -10,7 +10,15 @@ export class Door extends Cell
 		// Spécifie un type particulier
 		this._type = 'door';
 		
+		// La porte permet de changer de niveau
+		this._isCrossable = true;
+		
 		this.#targetLevel = targetLevel;
+	}
+	
+	getTargetLevel()
+	{
+		return this.#targetLevel;
 	}
 	
 	renderInfos()
