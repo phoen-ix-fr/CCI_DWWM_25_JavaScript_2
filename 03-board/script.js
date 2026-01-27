@@ -38,3 +38,16 @@ document.querySelector('#save-game button').addEventListener('click', () => {
 	
 	objBoard.saveToLocal();
 });
+
+
+// Requête Asynchrone pour récupérer le template de plateau de niveau 1
+fetch('https://cci-api-jdr.phoen-ix.net/api/boards/1', {
+	method: 'GET',
+	headers: { 'Content-Type': 'application/json' }
+})
+.then(response => response.json())
+.then(data => {
+	
+	console.log(data);
+	
+}).catch(error => console.error('Error: ', error));
