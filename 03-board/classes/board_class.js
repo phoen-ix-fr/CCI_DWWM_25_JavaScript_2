@@ -44,10 +44,9 @@ export class Board
 		// Pour chaque colonne (X), on créer les colonnes (Y) :
 		for (let i = 0; i < this.#arrTokensPosition.length; i++) {
 			this.#arrTokensPosition[i] = Array(sizeHeight);
-			
-			// On rempli chacune des cases de la ligne avec des NULL
-			this.#arrTokensPosition[i].fill(null); 
 		}
+		
+		this.#resetBoard();
 		
 		// Chargement du contenu du Local Storage
 		const strBoardLocalStorage = localStorage.getItem('Board');
@@ -99,64 +98,72 @@ export class Board
 		}
 		else {
 		
-			/*
-			// Sinon, on génère comme avant		
-			this.#generateWalls();
-			
-			this.#initialisePlayer();
-			
-			this.#generateEnemies(2, 'Warrior', "Guerrier Orc");
-			this.#generateEnemies(3, 'Firespirit', "Feu follet");
-			*/
-			
-			// Chargement du plateau depuis l'API
-			// Requête Asynchrone pour récupérer le template de plateau de niveau 1
-			fetch('https://cci-api-jdr.phoen-ix.net/api/boards/1', {
-				method: 'GET',
-				headers: { 'Content-Type': 'application/json' }
-			})
-			.then(response => response.json())
-			.then(data => {
-				
-				// On parcours tous les ennemis renvoyés par l'API
-				data.ennemies.forEach(e => {
-					
-					this.#arrTokensPosition[e.position.x][e.position.y] = Enemy.fromJSON(e);
-				});
-				
-				// On parcours tous les murs renvoyés par l'API
-				data.walls.forEach(w => {
-					
-					this.#arrTokensPosition[w.position.x][w.position.y] = new Wall();
-				});
-				
-				// On parcours les coffres (chests)
-				// TODO Créer les classes correspondantes
-				data.chests.forEach(c => {
-					
-					// c.isOpened = true; //< Pour tester l'affichage du coffre ouvert
-					this.#arrTokensPosition[c.position.x][c.position.y] = Chest.fromJSON(c);
-				});
-				
-				// On parcours les portes (doors)
-				// TODO Créer les classes correspondantes
-				data.doors.forEach(d => {
-					
-					this.#arrTokensPosition[d.position.x][d.position.y] = Door.fromJSON(d);
-				});
-				
-				// Création du joueur, les données sont pour l'instant en dur
-				// l'API ne renvoi que la position initiale du joueur
-				this.#objPlayer = new Player('Archer', 'Legolas', 100, 100, 50, 300, 1, data.player.position, 0, 100);
-				this.#arrTokensPosition[data.player.position.x][data.player.position.y] 
-					= this.#objPlayer;
-				
-				// On affiche une fois que les données sont traitées
-				this.render();
-				this.updatePlayerInfos();
-				
-			}).catch(error => console.error('Error: ', error));
+			// Par défaut, si pas de sauvegarde, on charge le niveau 1
+			this.#loadLevel(1);
 		}
+	}
+	
+	#resetBoard()
+	{
+		for (let i = 0; i < this.#arrTokensPosition.length; i++) {
+			
+			// On rempli chacune des cases de la ligne avec des NULL
+			this.#arrTokensPosition[i].fill(null); 
+		}
+	}
+	
+	#loadLevel(level)
+	{		
+		// Avant de charger le niveau, on réinitialise le plateau (à vide)
+		this.#resetBoard();
+		
+		// Chargement du plateau depuis l'API
+		// Requête Asynchrone pour récupérer le template de plateau de niveau 1
+		fetch(`https://cci-api-jdr.phoen-ix.net/api/boards/${level}`, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' }
+		})
+		.then(response => response.json())
+		.then(data => {
+			
+			// On parcours tous les ennemis renvoyés par l'API
+			data.ennemies.forEach(e => {
+				
+				this.#arrTokensPosition[e.position.x][e.position.y] = Enemy.fromJSON(e);
+			});
+			
+			// On parcours tous les murs renvoyés par l'API
+			data.walls.forEach(w => {
+				
+				this.#arrTokensPosition[w.position.x][w.position.y] = new Wall();
+			});
+			
+			// On parcours les coffres (chests)
+			// TODO Créer les classes correspondantes
+			data.chests.forEach(c => {
+				
+				// c.isOpened = true; //< Pour tester l'affichage du coffre ouvert
+				this.#arrTokensPosition[c.position.x][c.position.y] = Chest.fromJSON(c);
+			});
+			
+			// On parcours les portes (doors)
+			// TODO Créer les classes correspondantes
+			data.doors.forEach(d => {
+				
+				this.#arrTokensPosition[d.position.x][d.position.y] = Door.fromJSON(d);
+			});
+			
+			// Création du joueur, les données sont pour l'instant en dur
+			// l'API ne renvoi que la position initiale du joueur
+			this.#objPlayer = new Player('Archer', 'Legolas', 100, 100, 50, 300, 1, data.player.position, 0, 100);
+			this.#arrTokensPosition[data.player.position.x][data.player.position.y] 
+				= this.#objPlayer;
+			
+			// On affiche une fois que les données sont traitées
+			this.render();
+			this.updatePlayerInfos();
+			
+		}).catch(error => console.error('Error: ', error));
 	}
 	
 	#initialisePlayer()
@@ -379,7 +386,13 @@ export class Board
 			}
 			else if(objObstacle.isCrossable()) {
 				
-				window.alert(`On peut le traverser pour changer de niveau : ${objObstacle.getTargetLevel()}`);
+				// window.alert(`On peut le traverser pour changer de niveau : ${objObstacle.getTargetLevel()}`);
+				
+				if(window.confirm("Souhaites-tu réellement franchir ce portail très dangeuuureux ?")) {
+				
+					// On charge le plateau du niveau associé à la porte qui est franchie
+					this.#loadLevel(objObstacle.getTargetLevel());
+				}
 			}
 		}
 	}
