@@ -11,6 +11,21 @@ export class Item
 		this.#value 	= value;
 	}
 	
+	getType()
+	{
+		return this.#type;
+	}
+	
+	getAction()
+	{
+		return this.#action;
+	}
+	
+	getValue()
+	{
+		return this.#value;
+	}
+	
 	toJSON(key)
 	{
 		return {

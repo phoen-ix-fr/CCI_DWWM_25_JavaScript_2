@@ -24,11 +24,17 @@ export class Chest extends Cell
 	
 	renderInfos()
 	{
-		const strOutput = `<p>C'est un coffre : ${this.#isOpened ? 'Ouvert' : 'Fermé'}</p>`;
+		let strOutput = `<p>C'est un coffre : ${this.#isOpened ? 'Ouvert' : 'Fermé'}</p>`;
 		
 		strOutput += "<ul>";
 		// Boucle sur les items (rajouter les <li>)
-		
+		this.#loot.forEach(objItem => {
+			
+			strOutput += `<li>Type : ${objItem.getType()}, 
+				Action: ${objItem.getAction()}, 
+				Valeur: ${objItem.getValue()}</li>
+			`;
+		});
 		
 		strOutput += "</ul>";
 		return strOutput;
