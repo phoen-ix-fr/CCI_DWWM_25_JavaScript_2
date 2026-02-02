@@ -23,8 +23,8 @@ export class Item
 	static fromJSON(objJson)
 	{
 		// On construit un objet Item à partir de l'objet JSON transmis
-		const objItem = new Item(objItem.type, 
-			objItem.action, objItem.value
+		const objItem = new Item(objJson.type, 
+			objJson.action, objJson.value
 		);
 		
 		return objItem;

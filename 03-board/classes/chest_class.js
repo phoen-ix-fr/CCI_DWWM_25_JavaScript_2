@@ -24,7 +24,14 @@ export class Chest extends Cell
 	
 	renderInfos()
 	{
-		return `C'est un coffre : ${this.#isOpened ? 'Ouvert' : 'Fermé'}`;
+		const strOutput = `<p>C'est un coffre : ${this.#isOpened ? 'Ouvert' : 'Fermé'}</p>`;
+		
+		strOutput += "<ul>";
+		// Boucle sur les items (rajouter les <li>)
+		
+		
+		strOutput += "</ul>";
+		return strOutput;
 	}
 
 	render()
@@ -42,7 +49,8 @@ export class Chest extends Cell
 	{
 		return {
 			type: this._type,
-			isOpened: this.#isOpened
+			isOpened: this.#isOpened,
+			loot: this.#loot
 		};
 	}
 	
@@ -55,12 +63,14 @@ export class Chest extends Cell
 	/*	
 	 */
 	static fromJSON(objJson)
-	{
+	{		
 		// Instanciation d'un nouvel objet avec les infos du JSON
 		const objChest = new Chest(objJson.isOpened);
 		
 		// On boucle sur la clé "loot" du JSON qui correspond au contenu du coffre
-		objJson.forEach(jsonItem => {
+		objJson.loot.forEach(jsonItem => {
+			
+			console.log(jsonItem);
 			
 			// Créer un nouvel item et l'ajouter au coffre précédement instancié
 			const objItem = Item.fromJSON(jsonItem);
