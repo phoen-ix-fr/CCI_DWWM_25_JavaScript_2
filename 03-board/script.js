@@ -36,9 +36,14 @@ document.addEventListener("keydown", (e) => {
 	objBoard.render(); //< Met à jour l'affichage
 });
 
-document.querySelector('#save-game button').addEventListener('click', () => {
+document.querySelector('#save-game button#save-btn').addEventListener('click', () => {
 	
 	objBoard.saveToLocal();
 });
 
+
+document.querySelector('#save-game button#update-info-btn').addEventListener('click', () => {
+	
+	objBoard.updatePlayerInfos();
+});
 

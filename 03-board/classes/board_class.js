@@ -163,7 +163,15 @@ export class Board
 			
 			// Création du joueur, les données sont pour l'instant en dur
 			// l'API ne renvoi que la position initiale du joueur
-			this.#objPlayer = new Player('Archer', 'Legolas', 100, 100, 50, 300, 1, data.player.position, 0, 100);
+			if(this.#objPlayer) {
+				
+				this.#objPlayer.setCurrentPosition(data.player.position);
+			}
+			else {
+				
+				this.#objPlayer = new Player('Archer', 'Legolas', 100, 100, 50, 300, 1, data.player.position, 0, 100);
+			}
+			
 			this.#arrTokensPosition[data.player.position.x][data.player.position.y] 
 				= this.#objPlayer;
 				
@@ -401,6 +409,7 @@ export class Board
 				const chestLoot = objObstacle.getLoot();
 				
 				objObstacle.setEmpty();
+				console.log(this.#objPlayer);
 				
 				this.#objPlayer.addInventory(chestLoot);
 
@@ -425,6 +434,8 @@ export class Board
 	 */
 	updatePlayerInfos()
 	{
+		console.log(this.#objPlayer);
+		
 		document.getElementById('player-name').textContent 		= this.#objPlayer.getName();
 		document.getElementById('player-class').textContent 	= this.#objPlayer.getCharacterClass();
 		document.getElementById('player-strength').textContent 	= this.#objPlayer.getStrength();
@@ -446,6 +457,8 @@ export class Board
 				// On cible la n-ième DIV de l'inventaire HTML
 				const elDiv = document.querySelector(`#slots .slot:nth-of-type(${i + 1})`);
 			
+				elDiv.textContent = '';
+				
 				// On appelle le rendu graphique au niveau de l'item sur la DIV HTML
 				elDiv.appendChild(objItem.render());
 			}
