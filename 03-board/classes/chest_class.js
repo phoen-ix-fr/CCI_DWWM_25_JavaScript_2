@@ -88,8 +88,6 @@ export class Chest extends Cell
 		// On boucle sur la clé "loot" du JSON qui correspond au contenu du coffre
 		objJson.loot.forEach(jsonItem => {
 			
-			console.log(jsonItem);
-			
 			// Créer un nouvel item et l'ajouter au coffre précédement instancié
 			const objItem = Item.fromJSON(jsonItem);
 			

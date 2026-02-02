@@ -51,6 +51,11 @@ export class Player extends Character
 		this.#inventory = this.#inventory.concat(items);
 	}
 	
+	getInventory()
+	{
+		return this.#inventory;
+	}
+	
 	renderInfos()
 	{
 		return "C'est toi...";

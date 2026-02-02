@@ -59,13 +59,15 @@ main {
 	gap: 2px; 
 }
 
-.cell, .wall, .player, .enemy, .door, .chest {
+.cell, .wall, .player, .enemy, .door, .chest, .item {
     width: 40px;
     height: 40px;	
 	
     position: relative;
     border-radius: 5px;
 	border: 1px solid black;
+	
+	background-size: cover;
 }
 
 .cell, .door, .chest  {
@@ -78,21 +80,14 @@ main {
 
 .door {
     background-image: url("assets/door.png");
-	background-size: cover;
-}
-
-.chest {
-	background-size: cover;
 }
 
 .enemy {
 	background-color: rgba(239, 68, 68, 0.2);
-	background-size: cover;
 }
 
 .player {
     background-color: #e6e6e6;
-	background-size: cover;
 }
 
 .player.in-battle {

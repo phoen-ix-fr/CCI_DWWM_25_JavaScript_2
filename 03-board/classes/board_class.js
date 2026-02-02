@@ -396,7 +396,7 @@ export class Board
 			}
 			else if(objObstacle.isLootable()) {
 				
-				window.alert("On peut ramasser truc c'est trop chouette!!");
+				// window.alert("On peut ramasser truc c'est trop chouette!!");
 				
 				const chestLoot = objObstacle.getLoot();
 				
@@ -404,7 +404,8 @@ export class Board
 				
 				this.#objPlayer.addInventory(chestLoot);
 
-				console.log(this.#objPlayer);
+				// Actualisation des infos du joueur (pour mettre à jour l'affichage de l'inventaire)
+				this.updatePlayerInfos();
 			}
 			else if(objObstacle.isCrossable()) {
 				
@@ -432,6 +433,23 @@ export class Board
 		
 		this.#updateBarInfo('#player-hp', this.#objPlayer.getHp(), this.#objPlayer.getMaxHp());
 		this.#updateBarInfo('#player-xp', this.#objPlayer.getXp(), this.#objPlayer.getMaxXp());	
+		
+		const arrInventory = this.#objPlayer.getInventory();
+		
+		for(let i = 0; i < 7; i++) {
+			
+			// On récupère le n-ième Item du tableau de l'inventaire
+			const objItem = arrInventory[i];
+			
+			if(objItem !== undefined) {
+			
+				// On cible la n-ième DIV de l'inventaire HTML
+				const elDiv = document.querySelector(`#slots .slot:nth-of-type(${i + 1})`);
+			
+				// On appelle le rendu graphique au niveau de l'item sur la DIV HTML
+				elDiv.appendChild(objItem.render());
+			}
+		}
 	}
 	
 	updateInfosArea(objObstacle)
