@@ -3,6 +3,7 @@ import { Enemy } from './enemy_class.js';
 import { Player } from './player_class.js';
 import { Door } from './door_class.js';
 import { Chest } from './chest_class.js';
+import { BattleArea } from './battle_area_class.js';
 
 function getRandomIntBetween(min, max) {
 	min = Math.ceil(min);
@@ -26,6 +27,8 @@ export class Board
 	#currentLevel;
 	
 	#gameMode = 'exploration';
+	
+	#objBattleArea;
 	
 	constructor(sizeWidth, sizeHeight, strGridGameId, strPlayerInfoId)
 	{
@@ -109,6 +112,9 @@ export class Board
 			// Par défaut, si pas de sauvegarde, on charge le niveau 1
 			this.#loadLevel(this.#currentLevel);
 		}
+		
+		// Instanciation de la zone des dés
+		this.#objBattleArea = new BattleArea('battle-area', 5);
 	}
 	
 	#resetBoard()
