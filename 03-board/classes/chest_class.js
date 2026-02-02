@@ -1,8 +1,10 @@
 import { Cell } from './cell_class.js';
+import { Item } from './item_class.js';
 
 export class Chest extends Cell
 {
 	#isOpened;
+	#loot; 		//< Tableau d'items
 	
 	constructor(isOpened) {
 		super();
@@ -15,6 +17,9 @@ export class Chest extends Cell
 		
 		// Par défaut, le coffre est fermé
 		this.#isOpened = isOpened??false;
+		
+		// On initialise le tableau à vide
+		this.#loot = [];
 	}
 	
 	renderInfos()
@@ -41,6 +46,11 @@ export class Chest extends Cell
 		};
 	}
 	
+	addItem(item)
+	{
+		this.#loot.push(item);
+	}
+	
 	/**
 	/*	
 	 */
@@ -48,6 +58,15 @@ export class Chest extends Cell
 	{
 		// Instanciation d'un nouvel objet avec les infos du JSON
 		const objChest = new Chest(objJson.isOpened);
+		
+		// On boucle sur la clé "loot" du JSON qui correspond au contenu du coffre
+		objJson.forEach(jsonItem => {
+			
+			// Créer un nouvel item et l'ajouter au coffre précédement instancié
+			const objItem = Item.fromJSON(jsonItem);
+			
+			objChest.addItem(objItem);
+		});
 		
 		return objChest;	
 	}
