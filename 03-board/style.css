@@ -16,6 +16,12 @@ main {
 }
 
 /* GRID GAME --------------------------------------------------------------------------*/
+#level-infos {
+	color: #321654;
+	font-weight: bold;
+	margin: 0;
+	text-align: center;
+}
 
 #grid-game {
 	/* max-width: 380px; La gestion de la largeur est fait dans le main */  

@@ -23,10 +23,14 @@ export class Board
 	
 	#objPlayer;
 	
+	#currentLevel;
+	
 	#gameMode = 'exploration';
 	
 	constructor(sizeWidth, sizeHeight, strGridGameId, strPlayerInfoId)
 	{
+		this.#currentLevel = 1;
+		
 		this.#gridSizeWidth  = sizeWidth;
 		this.#gridSizeHeight = sizeHeight;
 		
@@ -103,7 +107,7 @@ export class Board
 		else {
 		
 			// Par défaut, si pas de sauvegarde, on charge le niveau 1
-			this.#loadLevel(1);
+			this.#loadLevel(this.#currentLevel);
 		}
 	}
 	
@@ -162,10 +166,14 @@ export class Board
 			this.#objPlayer = new Player('Archer', 'Legolas', 100, 100, 50, 300, 1, data.player.position, 0, 100);
 			this.#arrTokensPosition[data.player.position.x][data.player.position.y] 
 				= this.#objPlayer;
+				
+				
+			this.#currentLevel = level;
 			
 			// On affiche une fois que les données sont traitées
 			this.render();
 			this.updatePlayerInfos();
+			
 			
 		}).catch(error => console.error('Error: ', error));
 	}
@@ -341,6 +349,8 @@ export class Board
 				}
 			}
 		}
+		
+		document.getElementById('level-infos').textContent = `Niveau ${this.#currentLevel}`;
 	}
 	
 	/**
