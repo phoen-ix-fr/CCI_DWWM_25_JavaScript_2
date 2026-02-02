@@ -207,6 +207,35 @@ export class Board
 		this.#arrTokensPosition[objPosition.x][objPosition.y] = this.#objPlayer;
 	}
 	
+	/** 
+	/*	Envoyer la sauvegarde du plateau vers l'API
+	 */
+	#saveToApi()
+	{
+		// On construit un objet littéral à partir des infos de la doc
+		const objSave = {
+			player: JSON.stringify(this.#objPlayer),
+			ennemies: [],
+			chests: [],
+			doors: [],
+			walls: []
+		};
+		
+		// Chargement du plateau depuis l'API
+		// Requête Asynchrone pour récupérer le template de plateau de niveau 1
+		fetch(`https://cci-api-jdr.phoen-ix.net/api/saves`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: objSave
+		})
+		.then(response => response.json())
+		.then(data => {
+			
+			console.log(data);
+		})
+		.catch(error => console.error('Error: ', error));
+	}
+	
 	/**
 	/*	Génère les murs sur le plateau
 	/*
