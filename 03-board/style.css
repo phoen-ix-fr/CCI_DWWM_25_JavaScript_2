@@ -111,9 +111,9 @@ main {
 }
 
 /* BATTLE AREA ------------------------------------------------------------------------*/
-# battle-area
+#battle-area
 {
-	
+	display: none;
 }
 
 #dices
@@ -294,3 +294,4 @@ main {
 	display: block;
 	color: #000000;
 }
+

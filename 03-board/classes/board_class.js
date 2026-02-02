@@ -436,6 +436,8 @@ export class Board
 				
 				// window.alert(`Combat! ${objObstacle.getCharacterClass()}`);
 				this.updateInfosArea(objObstacle);
+				
+				this.#objBattleArea.show();
 			}
 			else if(objObstacle.isLootable()) {
 				
