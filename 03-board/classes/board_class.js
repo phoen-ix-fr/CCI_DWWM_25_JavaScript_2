@@ -88,6 +88,10 @@ export class Board
 						case 'door':
 							this.#arrTokensPosition[x][y] = Door.fromJSON(objBoardLocalStorage[x][y]);
 							break;
+							
+						case 'chest':
+							this.#arrTokensPosition[x][y] = Chest.fromJSON(objBoardLocalStorage[x][y]);
+							break;
 					}
 				}
 			}
