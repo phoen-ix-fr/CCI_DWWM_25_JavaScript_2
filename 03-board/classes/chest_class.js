@@ -22,6 +22,18 @@ export class Chest extends Cell
 		this.#loot = [];
 	}
 	
+	getLoot()
+	{
+		return this.#loot;
+	}
+	
+	setEmpty()
+	{
+		this.#loot = [];
+		
+		this.#isOpened = true; //< Le coffre a été ouvert
+	}
+	
 	renderInfos()
 	{
 		let strOutput = `<p>C'est un coffre : ${this.#isOpened ? 'Ouvert' : 'Fermé'}</p>`;

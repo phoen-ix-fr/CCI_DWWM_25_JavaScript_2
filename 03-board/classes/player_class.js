@@ -7,6 +7,8 @@ export class Player extends Character
 	#xp;			//< Gestion des points d'expérience
 	#maxXp;
 	
+	#inventory;
+	
 	constructor(strCharacterClass, name, hp, maxHp, strength, agility, level, posCurrent, xp, maxXp)
 	{
 		// Appel du constructeur parent en transmettant tous les paramètres nécessaires
@@ -19,6 +21,8 @@ export class Player extends Character
 		
 		this.#xp = xp;
 		this.#maxXp = maxXp;
+		
+		this.#inventory = [];
 	}
 
 	getCurrentPosition()
@@ -39,6 +43,12 @@ export class Player extends Character
 	getMaxXp()
 	{
 		return this.#maxXp;
+	}
+	
+	addInventory(items)
+	{
+		// On fusionne les éléments de l'inventaire actuel avec les nouveaux éléments (items)
+		this.#inventory = this.#inventory.concat(items);
 	}
 	
 	renderInfos()

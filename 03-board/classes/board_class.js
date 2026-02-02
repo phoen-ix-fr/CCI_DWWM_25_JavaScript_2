@@ -397,6 +397,14 @@ export class Board
 			else if(objObstacle.isLootable()) {
 				
 				window.alert("On peut ramasser truc c'est trop chouette!!");
+				
+				const chestLoot = objObstacle.getLoot();
+				
+				objObstacle.setEmpty();
+				
+				this.#objPlayer.addInventory(chestLoot);
+
+				console.log(this.#objPlayer);
 			}
 			else if(objObstacle.isCrossable()) {
 				
